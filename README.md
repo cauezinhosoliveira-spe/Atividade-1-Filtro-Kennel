@@ -110,24 +110,46 @@ Os filtros de média e mediana, por serem filtros de suavização, fazem o opost
 ## 🔬 Experimento com Diferentes Tamanhos de Kernel
 
 ```python
-kernels = [3, 5, 7, 11]
+import cv2
+import matplotlib.pyplot as plt
 
-fig, axs = plt.subplots(2, len(kernels), figsize=(18, 8))
+# Carregar imagem
+imagem = cv2.imread("imagem.jpg")
 
-for i, k in enumerate(kernels):
-    media_k   = cv2.blur(img_rgb, (k, k))
-    mediana_k = cv2.medianBlur(img_rgb, k)
+# Converter BGR para RGB
+imagem_rgb = cv2.cvtColor(imagem, cv2.COLOR_BGR2RGB)
 
-    axs[0, i].imshow(media_k)
-    axs[0, i].set_title(f'Média ({k}x{k})')
-    axs[0, i].axis('off')
+# =========================
+# FILTRO MÉDIA KERNEL 3x3
+# =========================
+media_3x3 = cv2.blur(imagem_rgb, (3, 3))
 
-    axs[1, i].imshow(mediana_k)
-    axs[1, i].set_title(f'Mediana ({k}x{k})')
-    axs[1, i].axis('off')
+# =========================
+# FILTRO MÉDIA KERNEL 5x5
+# =========================
+media_5x5 = cv2.blur(imagem_rgb, (5, 5))
 
-plt.suptitle('Efeito do Tamanho do Kernel na Suavização', fontsize=14)
-plt.tight_layout()
+# Mostrar imagens
+plt.figure(figsize=(12, 6))
+
+# Original
+plt.subplot(1, 3, 1)
+plt.imshow(imagem_rgb)
+plt.title("Original")
+plt.axis("off")
+
+# Kernel 3x3
+plt.subplot(1, 3, 2)
+plt.imshow(media_3x3)
+plt.title("Kernel 3x3")
+plt.axis("off")
+
+# Kernel 5x5
+plt.subplot(1, 3, 3)
+plt.imshow(media_5x5)
+plt.title("Kernel 5x5")
+plt.axis("off")
+
 plt.show()
 ```
 
